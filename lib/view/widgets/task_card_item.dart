@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/view/widgets/body_text.dart';
 import 'package:todo_app/view/widgets/title_text.dart';
 
 class TaskCardItem extends StatelessWidget {
@@ -26,7 +27,6 @@ class TaskCardItem extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Container(
           width: double.infinity,
-          height: 50,
           padding: const EdgeInsets.all(16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,7 +38,7 @@ class TaskCardItem extends StatelessWidget {
                   color: Colors.black87,
                 ),
               ),
-              TitleText(
+              BodyText(
                 text: dueDate,
                 size: 14,
                 color: Colors.grey,

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/model/data/task.dart';
 import 'package:todo_app/utils/helper.dart';
+import 'package:todo_app/view/widgets/button_section.dart';
 import 'package:todo_app/view/widgets/title_text.dart';
 import 'package:todo_app/viewModel/task_view_model.dart';
 
@@ -35,25 +37,25 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   void _addTask() async {
     if (_formKey.currentState!.validate()) {
-      if (await helper.internetAvailability()) {
-        final title = _titleController.text;
-        final description = _descriptionController.text;
-        final dueDateMillis = _selectedDueDate?.millisecondsSinceEpoch ??
-            DateTime.now().millisecondsSinceEpoch;
+      if (_selectedDueDate != null) {
+        if (await helper.internetAvailability()) {
+          final title = _titleController.text;
+          final description = _descriptionController.text;
+          final dueDateMillis = _selectedDueDate?.millisecondsSinceEpoch ??
+              DateTime.now().millisecondsSinceEpoch;
 
-        final task = Task(
-          id: "",
-          title: title,
-          description: description,
-          dueDateMillis: dueDateMillis,
-        );
-        Provider.of<TaskViewModel>(context, listen: false).addTask(task);
-        Navigator.pop(context);
+          final task = Task(
+            title: title,
+            description: description,
+            dueDateMillis: dueDateMillis,
+          );
+          Provider.of<TaskViewModel>(context, listen: false).addTask(task);
+          Navigator.pop(context);
+        } else {
+          helper.showSnackBar(context, 'No internet connection, task not added.');
+        }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('No internet connection. Task not added.')),
-        );
+        helper.showSnackBar(context, 'Due date required!');
       }
     }
   }
@@ -84,7 +86,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a title';
+                    return 'Title can be empty!';
                   }
                   return null;
                 },
@@ -97,32 +99,42 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 5,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a description';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 16.0),
-              Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.calendar_month_outlined),
-                    onPressed: _showDatePicker,
+              InkWell(
+                splashColor: Colors.blue[100],
+                borderRadius: BorderRadius.circular(10),
+                onTap: _showDatePicker,
+                child: SizedBox(
+                  height: 50,
+                  child: Card.outlined(
+                    child: Row(
+                      children: <Widget>[
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        const Icon(Icons.calendar_month_outlined),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Text(
+                          _selectedDueDate != null
+                              ? _selectedDueDate!
+                                  .toLocal()
+                                  .toString()
+                                  .split(' ')[0]
+                              : 'Due Date',
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    _selectedDueDate != null
-                        ? _selectedDueDate!.toLocal().toString().split(' ')[0]
-                        : 'Due Date',
-                  ),
-                ],
+                ),
               ),
               const SizedBox(height: 16.0),
               Center(
-                child: ElevatedButton(
-                  onPressed: _addTask,
-                  child: Text('Add Task'),
+                child: ButtonSection(
+                  onTap: _addTask,
+                  text: 'Add Task',
                 ),
               ),
             ],

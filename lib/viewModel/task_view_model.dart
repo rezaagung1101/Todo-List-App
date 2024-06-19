@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/model/data/task.dart';
 import 'package:todo_app/model/repository/task_repository.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:todo_app/utils/helper.dart';
 
 class TaskViewModel extends ChangeNotifier {
@@ -15,10 +14,10 @@ class TaskViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   TaskViewModel() {
-    _initializeTasks();
+    initializeTasks();
   }
 
-  Future<void> _initializeTasks() async {
+  Future<void> initializeTasks() async {
     if (await helper.internetAvailability()) {
       await _fetchTasksFromAPI();
     } else {
@@ -63,6 +62,7 @@ class TaskViewModel extends ChangeNotifier {
       print('Error add task: $e');
       setLoading(false);
     }
+    initializeTasks();
   }
 
   Future<void> updateTask(Task task) async {

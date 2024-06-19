@@ -1,11 +1,11 @@
 class Task {
-  final String id;
+  final String? id;
   final String title;
   final String description;
   final int dueDateMillis;
 
   Task({
-    required this.id,
+    this.id,
     required this.title,
     required this.description,
     required this.dueDateMillis,
@@ -13,7 +13,7 @@ class Task {
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
-      id: json['id'],
+      id: json['id'].toString(),
       title: json['title'],
       description: json['description'],
       dueDateMillis: json['dueDateMillis'],
