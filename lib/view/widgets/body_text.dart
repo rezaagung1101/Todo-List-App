@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TitleText extends StatelessWidget {
-  const TitleText({super.key, required this.text, required this.size, required this.color});
+class BodyText extends StatelessWidget {
+  const BodyText({super.key, required this.text, required this.size, required this.color});
 
   final String text;
   final double size;
@@ -12,11 +12,10 @@ class TitleText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontFamily: 'semi_bold_poppins',
+        fontFamily: 'poppins',
         color: color,
         fontSize: size,
       ),
-      maxLines: 1,
     );
   }
 }
