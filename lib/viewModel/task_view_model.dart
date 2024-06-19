@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/model/data/task.dart';
 import 'package:todo_app/model/repository/task_repository.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:todo_app/utils/helper.dart';
 
 class TaskViewModel extends ChangeNotifier {
   final TaskRepository _taskRepository = TaskRepository();
   List<Task> _tasks = [];
   bool _isLoading = false;
+  Helper helper = Helper();
 
   List<Task> get tasks => _tasks;
 
@@ -17,9 +19,8 @@ class TaskViewModel extends ChangeNotifier {
   }
 
   Future<void> _initializeTasks() async {
-    if (await _isConnected()) {
+    if (await helper.internetAvailability()) {
       await _fetchTasksFromAPI();
-      await _syncLocalTasksToAPI();
     } else {
       await _fetchTasksFromLocalDB();
     }
@@ -51,54 +52,43 @@ class TaskViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> _syncLocalTasksToAPI() async {
-      // Fetch tasks from local DB that are not synced with the API
-      List<Task> localTasks = await _taskRepository.fetchAllTasksFromLocalDB();
-      for (var task in localTasks) {
-        if (!task.isSynced) {
-          try {
-            setLoading(true);
-            await _taskRepository.createTask(task);
-            // Update task in local DB to mark it as synced
-            task.isSynced = true;
-            await _taskRepository.updateTaskInLocalDB(task);
-            setLoading(false);
-          } catch (e) {
-            print('Error syncing local tasks to API: $e');
-            setLoading(false);
-          }
-        }
-      }
-  }
-
   Future<void> addTask(Task task) async {
-    await _taskRepository.insertTaskToLocalDB(task);
-    _tasks.add(task);
-    notifyListeners();
-    await _syncLocalTasksToAPI();
+    setLoading(true);
+    try {
+      await _taskRepository.insertTaskToLocalDB(task);
+      await _taskRepository.createTask(task);
+      notifyListeners();
+      setLoading(false);
+    } catch (e) {
+      print('Error add task: $e');
+      setLoading(false);
+    }
   }
 
   Future<void> updateTask(Task task) async {
-    await _taskRepository.updateTaskInLocalDB(task);
-    int index = _tasks.indexWhere((t) => t.id == task.id);
-    if (index != -1) {
-      _tasks[index] = task;
+    setLoading(true);
+    try {
+      await _taskRepository.updateTask(task);
+      await _taskRepository.updateTaskInLocalDB(task);
       notifyListeners();
+      setLoading(false);
+    } catch (e) {
+      print('Error update task: $e');
+      setLoading(false);
     }
-    await _syncLocalTasksToAPI();
   }
 
   Future<void> deleteTask(int id) async {
-    await _taskRepository.deleteTaskFromLocalDB(id);
-    _tasks.removeWhere((task) => task.id == id);
-    notifyListeners();
-    if (await _isConnected()) {
+    setLoading(true);
+    try {
       await _taskRepository.deleteTaskById(id.toString());
+      await _taskRepository.deleteTaskFromLocalDB(id);
+      notifyListeners();
+      setLoading(false);
+    } catch (e) {
+      print('Error delete task: $e');
+      setLoading(false);
     }
   }
 
-  Future<bool> _isConnected() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    return connectivityResult != ConnectivityResult.none;
-  }
 }

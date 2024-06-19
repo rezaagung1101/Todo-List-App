@@ -3,21 +3,13 @@ class Task {
   final String title;
   final String description;
   final int dueDateMillis;
-  bool _isSynced;
 
   Task({
     required this.id,
     required this.title,
     required this.description,
     required this.dueDateMillis,
-    bool isSynced = false,
-  }) : _isSynced = isSynced;
-
-  bool get isSynced => _isSynced;
-
-  set isSynced(bool value) {
-    _isSynced = value;
-  }
+  });
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
@@ -25,7 +17,6 @@ class Task {
       title: json['title'],
       description: json['description'],
       dueDateMillis: json['dueDateMillis'],
-      isSynced: json['isSynced'] == 1 || json['isSynced'] == true,
     );
   }
 
@@ -35,7 +26,6 @@ class Task {
       'title': title,
       'description': description,
       'dueDateMillis': dueDateMillis,
-      'isSynced': _isSynced ? 1 : 0,
     };
   }
 
@@ -45,7 +35,6 @@ class Task {
       title: map['title'],
       description: map['description'],
       dueDateMillis: map['dueDateMillis'],
-      isSynced: map['isSynced'] == 1,
     );
   }
 }

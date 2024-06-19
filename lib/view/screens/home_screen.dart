@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       children: [
         const TitleText(
-          text: 'Your To-do List',
+          text: 'Your To-Do List',
           size: 20,
           color: Colors.black87,
         ),

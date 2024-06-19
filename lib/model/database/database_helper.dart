@@ -33,8 +33,7 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT,
         description TEXT,
-        dueDateMillis INTEGER,
-        isSynced INTEGER DEFAULT 0
+        dueDateMillis INTEGER
       )
     ''');
   }
