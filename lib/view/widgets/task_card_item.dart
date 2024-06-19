@@ -21,12 +21,12 @@ class TaskCardItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Card.filled(
         color: Colors.white,
-        elevation: 8,
+        elevation: 4,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Container(
           width: double.infinity,
-          height: 75,
+          height: 50,
           padding: const EdgeInsets.all(16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +34,7 @@ class TaskCardItem extends StatelessWidget {
               Expanded(
                 child: TitleText(
                   text: taskTitle,
-                  size: 18,
+                  size: 16,
                   color: Colors.black87,
                 ),
               ),
