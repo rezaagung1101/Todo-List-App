@@ -3,8 +3,11 @@ import 'package:todo_app/model/data/task.dart';
 import 'package:todo_app/utils/constants.dart';
 import 'package:todo_app/view/screens/add_task_screen.dart';
 import 'package:todo_app/view/screens/detail_task_screen.dart';
+import 'package:todo_app/view/widgets/loading_item.dart';
 import 'package:todo_app/view/widgets/task_card_item.dart';
 import 'package:todo_app/view/widgets/title_text.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/viewModel/task_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,12 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Task> taskList = [
-    // Task(id: 0, title: "title1", description: "description", dueDateMillis: 01),
-    // Task(id: 1, title: "title2", description: "description", dueDateMillis: 01),
-    Task(id: 2, title: "title3", description: "description", dueDateMillis: 01),
-    // Task(id: 3, title: "title4", description: "description", dueDateMillis: 01),
-  ];
+  List<Task> taskList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +30,24 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Colors.black87,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: taskList.isNotEmpty
-              ? _buildListContent(taskList)
-              : const TitleText(
-                  text: "You don't have any task",
-                  color: Colors.black87,
-                  size: 20,
-                ),
-        ),
+      body: Consumer<TaskViewModel>(
+        builder: (context,taskViewModel, child) {
+          return Stack(children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: taskViewModel.tasks.isNotEmpty
+                    ? _buildListContent(taskViewModel.tasks)
+                    : const TitleText(
+                        text: "You don't have any task",
+                        color: Colors.black87,
+                        size: 20,
+                      ),
+              ),
+            ),
+            if (taskViewModel.isLoading) const LoadingItem()
+          ]);
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -54,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildListContent(List<Task> taskList) {
+  Widget _buildListContent(List<Task> tasks) {
     return Column(
       children: [
         const TitleText(
@@ -67,9 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: taskList.length,
+              itemCount: tasks.length,
               itemBuilder: (context, index) {
-                final task = taskList[index];
+                final task = tasks[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2),
                   child: TaskCardItem(

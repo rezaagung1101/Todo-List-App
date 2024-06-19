@@ -1,5 +1,5 @@
 class Task {
-  final int id;
+  final String id;
   final String title;
   final String description;
   final int dueDateMillis;
@@ -25,7 +25,7 @@ class Task {
       title: json['title'],
       description: json['description'],
       dueDateMillis: json['dueDateMillis'],
-      isSynced: json['isSynced'] == 1,
+      isSynced: json['isSynced'] == 1 || json['isSynced'] == true,
     );
   }
 
@@ -41,7 +41,7 @@ class Task {
 
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task(
-      id: map['id'],
+      id: map['id'].toString(),
       title: map['title'],
       description: map['description'],
       dueDateMillis: map['dueDateMillis'],
