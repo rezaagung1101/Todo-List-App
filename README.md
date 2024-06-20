@@ -6,6 +6,19 @@ Todo App is a simple and intuitive task management application designed to help 
 
 ## How to Use the App
 
+### Platform-Specific Installation
+
+#### For Android:
+
+1. **Download the App**:
+   - Download the app via the [G-Drive link](https://drive.google.com/file/d/1ydSSb0v62bWbgYPCfLQGoZxTvj8VQ_QD/view?usp=sharing).
+
+2. **Install the App**:
+   - Locate the downloaded APK file on your Android device.
+   - Tap the APK file to start the installation process.
+   - If prompted, enable the option to install apps from unknown sources.
+   - Follow the on-screen instructions to complete the installation.
+
 ### Setup and Installation
 
 #### Clone the GitHub Project
@@ -35,18 +48,6 @@ Todo App is a simple and intuitive task management application designed to help 
      flutter run
      ```
 
-### Platform-Specific Installation
-
-#### For Android:
-
-1. **Download the App**:
-   - Download the app via the [G-Drive link](https://drive.google.com/file/d/1ydSSb0v62bWbgYPCfLQGoZxTvj8VQ_QD/view?usp=sharing).
-
-2. **Install the App**:
-   - Locate the downloaded APK file on your Android device.
-   - Tap the APK file to start the installation process.
-   - If prompted, enable the option to install apps from unknown sources.
-   - Follow the on-screen instructions to complete the installation.
 
 ### Features
 
