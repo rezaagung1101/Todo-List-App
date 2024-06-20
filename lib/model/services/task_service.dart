@@ -9,7 +9,7 @@ import 'package:todo_app/model/api/app_exception.dart';
 class TaskService extends BaseService{
 
   @override
-  Future getTaskById(String id) async {
+  Future? getTaskById(String id) async {
     dynamic responseJson;
     try {
       final response = await http.get(
@@ -22,7 +22,7 @@ class TaskService extends BaseService{
   }
 
   @override
-  Future getAllTasks() async {
+  Future? getAllTasks() async {
     dynamic responseJson;
     try {
       final response = await http.get(
@@ -35,7 +35,7 @@ class TaskService extends BaseService{
   }
 
   @override
-  Future deleteTaskById(String id) async {
+  Future? deleteTaskById(String id) async {
     dynamic responseJson;
     try {
       final response = await http.delete(
@@ -48,7 +48,7 @@ class TaskService extends BaseService{
   }
 
   @override
-  Future createTask(Map<String, dynamic> task) async {
+  Future? createTask(Map<String, dynamic>? task) async {
     dynamic responseJson;
     try {
       final response = await http.post(
@@ -66,7 +66,7 @@ class TaskService extends BaseService{
   }
 
   @override
-  Future updateTask(String id, Map<String, dynamic> task) async {
+  Future? updateTask(String id, Map<String, dynamic>? task) async {
     dynamic responseJson;
     try {
       final response = await http.put(

@@ -4,7 +4,7 @@ import 'package:todo_app/model/repository/task_repository.dart';
 import 'package:todo_app/utils/helper.dart';
 
 class TaskViewModel extends ChangeNotifier {
-  final TaskRepository _taskRepository = TaskRepository();
+  final TaskRepository _taskRepository;
   List<Task> _tasks = [];
   bool _isLoading = false;
   Helper helper = Helper();
@@ -13,15 +13,15 @@ class TaskViewModel extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  TaskViewModel() {
+  TaskViewModel({required TaskRepository taskRepository})
+      : _taskRepository = taskRepository {
     initializeTasks();
   }
-
   Future<void> initializeTasks() async {
     if (await helper.internetAvailability()) {
-      await _fetchTasksFromAPI();
+      await fetchTasksFromAPI();
     } else {
-      await _fetchTasksFromLocalDB();
+      await fetchTasksFromLocalDB();
     }
   }
 
@@ -30,12 +30,12 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _fetchTasksFromLocalDB() async {
+  Future<void> fetchTasksFromLocalDB() async {
     _tasks = await _taskRepository.fetchAllTasksFromLocalDB();
     notifyListeners();
   }
 
-  Future<void> _fetchTasksFromAPI() async {
+  Future<void> fetchTasksFromAPI() async {
     setLoading(true);
     try {
       _tasks = await _taskRepository.fetchAllTasks();
@@ -54,7 +54,6 @@ class TaskViewModel extends ChangeNotifier {
   Future<void> addTask(Task task) async {
     setLoading(true);
     try {
-      await _taskRepository.insertTaskToLocalDB(task);
       await _taskRepository.createTask(task);
       notifyListeners();
       setLoading(false);

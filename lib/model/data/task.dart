@@ -20,14 +20,6 @@ class Task {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'description': description,
-      'dueDateMillis': dueDateMillis,
-    };
-  }
 
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task(
@@ -37,4 +29,23 @@ class Task {
       dueDateMillis: map['dueDateMillis'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'dueDateMillis': dueDateMillis,
+    };
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'dueDateMillis': dueDateMillis,
+    };
+  }
+
 }
