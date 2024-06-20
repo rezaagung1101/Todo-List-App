@@ -39,12 +39,12 @@ class TaskViewModel extends ChangeNotifier {
     setLoading(true);
     try {
       _tasks = await _taskRepository.fetchAllTasks();
-      setLoading(false);
       notifyListeners();
       // Update local database with the fetched tasks
       for (var task in _tasks) {
         await _taskRepository.insertTaskToLocalDB(task);
       }
+      setLoading(false);
     } catch (e) {
       print('Error fetching tasks from API: $e');
       setLoading(false);
@@ -76,12 +76,13 @@ class TaskViewModel extends ChangeNotifier {
       print('Error update task: $e');
       setLoading(false);
     }
+    initializeTasks();
   }
 
-  Future<void> deleteTask(int id) async {
+  Future<void> deleteTask(String id) async {
     setLoading(true);
     try {
-      await _taskRepository.deleteTaskById(id.toString());
+      await _taskRepository.deleteTaskById(id);
       await _taskRepository.deleteTaskFromLocalDB(id);
       notifyListeners();
       setLoading(false);
@@ -89,6 +90,7 @@ class TaskViewModel extends ChangeNotifier {
       print('Error delete task: $e');
       setLoading(false);
     }
+    initializeTasks();
   }
 
 }

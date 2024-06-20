@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/model/data/task.dart';
 import 'package:todo_app/utils/helper.dart';
+import 'package:todo_app/view/widgets/button_date_picker.dart';
 import 'package:todo_app/view/widgets/button_section.dart';
 import 'package:todo_app/view/widgets/title_text.dart';
 import 'package:todo_app/viewModel/task_view_model.dart';
@@ -35,29 +36,42 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     }
   }
 
-  void _addTask() async {
+  void _confirmAddTask() async {
     if (_formKey.currentState!.validate()) {
       if (_selectedDueDate != null) {
         if (await helper.internetAvailability()) {
-          final title = _titleController.text;
-          final description = _descriptionController.text;
-          final dueDateMillis = _selectedDueDate?.millisecondsSinceEpoch ??
-              DateTime.now().millisecondsSinceEpoch;
-
-          final task = Task(
-            title: title,
-            description: description,
-            dueDateMillis: dueDateMillis,
+          bool? result = await helper.showConfirmationDialog(
+            context,
+            'Confirm Add Task',
+            'Are you sure you want to add this task?',
           );
-          Provider.of<TaskViewModel>(context, listen: false).addTask(task);
-          Navigator.pop(context);
+          if (result == true) {
+            _addTask();
+          }
         } else {
-          helper.showSnackBar(context, 'No internet connection, task not added.');
+          helper.showSnackBar(
+              context, 'No internet connection, task can\'t be added');
         }
       } else {
         helper.showSnackBar(context, 'Due date required!');
       }
     }
+  }
+
+  void _addTask() async {
+    final title = _titleController.text;
+    final description = _descriptionController.text;
+    final dueDateMillis = _selectedDueDate?.millisecondsSinceEpoch ??
+        DateTime.now().millisecondsSinceEpoch;
+
+    final task = Task(
+      title: title,
+      description: description,
+        dueDateMillis: dueDateMillis,
+    );
+    Provider.of<TaskViewModel>(context, listen: false).addTask(task);
+    helper.showSnackBar(context, 'Add new task success');
+    Navigator.pop(context);
   }
 
   @override
@@ -86,7 +100,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Title can be empty!';
+                    return 'Title can\'t be empty!';
                   }
                   return null;
                 },
@@ -101,40 +115,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 maxLines: 5,
               ),
               const SizedBox(height: 16.0),
-              InkWell(
-                splashColor: Colors.blue[100],
-                borderRadius: BorderRadius.circular(10),
-                onTap: _showDatePicker,
-                child: SizedBox(
-                  height: 50,
-                  child: Card.outlined(
-                    child: Row(
-                      children: <Widget>[
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        const Icon(Icons.calendar_month_outlined),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Text(
-                          _selectedDueDate != null
-                              ? _selectedDueDate!
-                                  .toLocal()
-                                  .toString()
-                                  .split(' ')[0]
-                              : 'Due Date',
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              ButtonDatePicker(
+                  onTap: _showDatePicker, selectedDueDate: _selectedDueDate),
               const SizedBox(height: 16.0),
               Center(
                 child: ButtonSection(
-                  onTap: _addTask,
+                  onTap: _confirmAddTask,
                   text: 'Add Task',
+                  mainColor: Colors.blue,
                 ),
               ),
             ],

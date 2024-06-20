@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/view/widgets/title_text.dart';
 
 class ButtonSection extends StatelessWidget {
-  const ButtonSection({super.key, required this.onTap, required this.text});
+  const ButtonSection({super.key, required this.onTap, required this.text, required this.mainColor, });
 
   final VoidCallback onTap;
   final String text;
+  final Color mainColor;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        splashColor: Colors.white38,
+        splashColor: mainColor,
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),
         child: Center(
@@ -22,7 +23,7 @@ class ButtonSection extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               decoration: BoxDecoration(
                 color: Colors.transparent, // Button background color
-                border: Border.all(color: Colors.blue, width: 2),
+                border: Border.all(color: mainColor, width: 2),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: const [
                   BoxShadow(
@@ -34,7 +35,7 @@ class ButtonSection extends StatelessWidget {
                 ],
               ),
               child: Center(
-                child: TitleText(size: 14, text: text, color: Colors.blue,),
+                child: TitleText(size: 14, text: text, color: mainColor,),
                 ),
               ),
             ),

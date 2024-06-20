@@ -53,7 +53,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<void> deleteTask(int id) async {
+  Future<void> deleteTask(String id) async {
     final db = await database;
     await db.delete(
       'tasks',

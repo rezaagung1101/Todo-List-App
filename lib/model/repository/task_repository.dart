@@ -45,7 +45,7 @@ class TaskRepository{
     await _dbHelper.updateTask(task);
   }
 
-  Future<void> deleteTaskFromLocalDB(int id) async {
+  Future<void> deleteTaskFromLocalDB(String id) async {
     await _dbHelper.deleteTask(id);
   }
 

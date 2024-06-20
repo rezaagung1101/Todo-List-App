@@ -26,4 +26,30 @@ class Helper{
           content: BodyText(text: message, size: 14, color: Colors.white)),
     );
   }
+
+  Future<bool?> showConfirmationDialog(BuildContext context, String title, String content) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(false);  // Return false
+              },
+            ),
+            TextButton(
+              child: const Text('Confirm'),
+              onPressed: () {
+                Navigator.of(context).pop(true);  // Return true
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
