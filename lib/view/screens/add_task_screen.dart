@@ -67,7 +67,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     final task = Task(
       title: title,
       description: description,
-        dueDateMillis: dueDateMillis,
+      dueDateMillis: dueDateMillis,
     );
     Provider.of<TaskViewModel>(context, listen: false).addTask(task);
     helper.showSnackBar(context, 'Add new task success');
@@ -96,6 +96,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 controller: _titleController,
                 decoration: const InputDecoration(
                   labelText: 'Title',
+                  labelStyle: TextStyle(fontFamily: 'poppins'),
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
@@ -110,6 +111,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 controller: _descriptionController,
                 decoration: const InputDecoration(
                   labelText: 'Enter your description here',
+                  labelStyle: TextStyle(fontFamily: 'poppins'),
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 5,

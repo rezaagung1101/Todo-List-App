@@ -32,19 +32,19 @@ class Helper{
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
-          content: Text(content),
+          title: Text(title, style: const TextStyle(fontFamily: 'poppins')),
+          content: Text(content, style: const TextStyle(fontFamily: 'poppins')),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: const Text('Cancel', style: TextStyle(fontFamily: 'poppins', color: Colors.black54)),
               onPressed: () {
-                Navigator.of(context).pop(false);  // Return false
+                Navigator.of(context).pop(false);
               },
             ),
             TextButton(
-              child: const Text('Confirm'),
+              child: const Text('Confirm', style: TextStyle(fontFamily: 'poppins')),
               onPressed: () {
-                Navigator.of(context).pop(true);  // Return true
+                Navigator.of(context).pop(true);
               },
             ),
           ],

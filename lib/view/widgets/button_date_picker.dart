@@ -30,6 +30,7 @@ class ButtonDatePicker extends StatelessWidget {
                     .toString()
                     .split(' ')[0]}'
                     : 'Due Date',
+                style: const TextStyle(fontFamily: 'poppins'),
               ),
             ],
           ),

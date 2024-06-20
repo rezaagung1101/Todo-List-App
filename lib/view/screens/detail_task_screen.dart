@@ -66,16 +66,16 @@ class _DetailTaskScreenState extends State<DetailTaskScreen> {
   }
 
   void _updateTask() async {
-      final updatedTask = Task(
-        id: widget.task.id,
-        title: _titleController.text,
-        description: _descriptionController.text,
-        dueDateMillis: _selectedDueDate?.millisecondsSinceEpoch ??
-            DateTime.now().millisecondsSinceEpoch,
-      );
-      await Provider.of<TaskViewModel>(context, listen: false)
-          .updateTask(updatedTask);
-      helper.showSnackBar(context, "Update task success");
+    final updatedTask = Task(
+      id: widget.task.id,
+      title: _titleController.text,
+      description: _descriptionController.text,
+      dueDateMillis: _selectedDueDate?.millisecondsSinceEpoch ??
+          DateTime.now().millisecondsSinceEpoch,
+    );
+    await Provider.of<TaskViewModel>(context, listen: false)
+        .updateTask(updatedTask);
+    helper.showSnackBar(context, "Update task success");
   }
 
   void _confirmDeleteTask() async {
@@ -88,7 +88,7 @@ class _DetailTaskScreenState extends State<DetailTaskScreen> {
       if (result == true) {
         _deleteTask();
       }
-    }else{
+    } else {
       helper.showSnackBar(
           context, 'No internet connection, task can\'t be deleted');
     }
@@ -124,6 +124,7 @@ class _DetailTaskScreenState extends State<DetailTaskScreen> {
                 controller: _titleController,
                 decoration: const InputDecoration(
                   labelText: 'Title',
+                  labelStyle: TextStyle(fontFamily: 'poppins'),
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
@@ -138,6 +139,7 @@ class _DetailTaskScreenState extends State<DetailTaskScreen> {
                 controller: _descriptionController,
                 decoration: const InputDecoration(
                   labelText: 'Description',
+                  labelStyle: TextStyle(fontFamily: 'poppins'),
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 5,
