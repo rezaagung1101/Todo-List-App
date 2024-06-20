@@ -1,16 +1,36 @@
-# todo_app
+## Todo App
 
-A new Flutter project.
+Todo App is a simple and intuitive task management application designed to help you keep track of your tasks and manage your time effectively. The app allows you to create, update, delete, and view tasks with ease. It is built using Flutter and supports many platforms.
 
-## Getting Started
+## How to Use the App
 
-This project is a starting point for a Flutter application.
+### Setup and Installation for Android
 
-A few resources to get you started if this is your first Flutter project:
+1. **Download the App**:
+   - Download the app via the [G-Drive link](https://drive.google.com/file/d/1ydSSb0v62bWbgYPCfLQGoZxTvj8VQ_QD/view?usp=sharing).
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. **Install the App**:
+   - Install the downloaded app on your Android device.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Features
+
+Once the app is installed, you can use the following features:
+
+* **View Task List**:
+  - Open the app to view a list of all your tasks on the home screen.
+
+* **Add Task**:
+  - Tap the "Add Task" button.
+  - Enter the task title, description, and due date.
+  - Press "Save" to add the task to your list.
+
+* **View Task Details**:
+  - Tap on any task in the list to open the task details screen.
+  - View the task's title, description, and due date.
+
+* **Update Task**:
+  - From the task details screen, you can modify the task's information.
+  - Press "Update" to save the changes.
+
+* **Delete Task**:
+  - From the task details screen, press the "Delete" button to remove the task from the list.
